@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Spam Detector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>📧 Spam Mail Classifier</h2>
+            <p>Paste the message below to check if it's safe or spam.</p>
+        </div>
+
+        <form action="/predict" method="post">
+            <textarea 
+                name="email_text"
+                placeholder="Example: Congratulations! You've won a $1,000 gift card..."
+                required>{{ original_text or '' }}</textarea>
+
+            <button type="submit">Analyze Content</button>
+        </form>
+
+        {% if prediction_text %}
+        <div class="result {{ 'ham' if 'Ham' in prediction_text else 'spam' }}">
+            <strong>Result:</strong> {{ prediction_text }}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
